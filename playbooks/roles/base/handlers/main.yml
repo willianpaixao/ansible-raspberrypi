@@ -1,0 +1,3 @@
+---
+- include: ssh.yml
+  tags: ssh

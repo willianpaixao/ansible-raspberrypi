@@ -1,0 +1,9 @@
+---
+- include: apt.yml
+  tags: apt
+
+- include: time.yml
+  tags: ntp
+
+- include: user.yml
+  tags: ssh

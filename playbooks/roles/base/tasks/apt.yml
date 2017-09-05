@@ -1,0 +1,10 @@
+---
+- name: Ensure the cache is updated
+  apt:
+    update_cache: yes
+  tags: apt
+
+- name: Ensure the packages are upgraded
+  apt:
+    upgrade: dist
+  tags: apt

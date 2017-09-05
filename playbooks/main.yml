@@ -1,0 +1,8 @@
+---
+- name: Top level playbook.
+  hosts: all
+  become: true
+  roles:
+    - base
+    - i3
+    - rpi

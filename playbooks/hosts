@@ -1,0 +1,1 @@
+10.0.0.109 ansible_connection=ssh ansible_ssh_private_key_file=~/.ssh/id_rsa

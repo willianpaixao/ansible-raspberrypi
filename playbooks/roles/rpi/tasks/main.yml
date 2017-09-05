@@ -1,0 +1,11 @@
+---
+- name: Enable SSH on boot
+  file:
+    path: /boot/ssh
+    state: touch
+
+- name: Rotate screen 270 degrees
+  lineinfile:
+    path: /boot/config.txt
+    state: present
+    line: 'display_rotate=3'

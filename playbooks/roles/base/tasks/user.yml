@@ -1,0 +1,28 @@
+---
+- name: Add willian user
+  user:
+    name: willian
+    shell: /bin/bash
+    comment: "Willian Paixao"
+    groups: sudo
+    append: yes
+
+- name: Add ssh public key willianATatari
+  authorized_key:
+    user: willian
+    state: present
+    key: "{{ lookup('file', lookup('env','HOME') + '/.ssh/id_rsa.pub') }}"
+
+- name: Change sudo to without password
+  lineinfile:
+    path: /etc/sudoers
+    state: present
+    regexp: '^%sudo\s'
+    line: '%sudo   ALL=(ALL:ALL) NOPASSWD:ALL'
+
+- name: Change keyboard layout to Swedish
+  lineinfile:
+    path: /etc/default/keyboard
+    regexp: '^XKBLAYOUT="gb"'
+    line: '^XKBLAYOUT="se"'
+
