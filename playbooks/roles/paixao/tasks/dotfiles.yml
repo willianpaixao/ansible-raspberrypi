@@ -1,0 +1,22 @@
+---
+- name: Clone repository
+  git:
+    repo: 'https://github.com/willianpaixao/dotfiles.git'
+    dest: /home/willian/dev/dotfiles
+  become_user: willian
+
+- name: Create symbolic links
+  file:
+    src: '/home/willian/dev/dotfiles/{{ item.src }}'
+    path: '/home/willian/{{ item.path }}'
+    state: link
+    force: yes
+  become_user: willian
+#    owner: willian
+#    group: willian
+  with_items:
+          - { src: 'bash_aliases', path: '.bash_aliases' }
+          - { src: 'bashrc', path: '.bashrc' }
+          - { src: 'gitconfig', path: '.gitconfig' }
+          - { src: 'tmux.conf', path: '.tmux.conf' }
+          - { src: 'vimrc', path: '.vimrc' }

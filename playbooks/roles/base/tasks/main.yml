@@ -2,6 +2,9 @@
 - include: apt.yml
   tags: apt
 
+- include: package.yml
+  tags: package
+
 - include: time.yml
   tags: ntp
 
