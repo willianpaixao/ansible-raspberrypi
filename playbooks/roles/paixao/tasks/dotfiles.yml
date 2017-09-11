@@ -3,7 +3,9 @@
   git:
     repo: 'https://github.com/willianpaixao/dotfiles.git'
     dest: /home/willian/dev/dotfiles
+  become: true
   become_user: willian
+  tags: dotfiles
 
 - name: Create symbolic links
   file:
@@ -11,12 +13,13 @@
     path: '/home/willian/{{ item.path }}'
     state: link
     force: yes
+  become: true
   become_user: willian
-#    owner: willian
-#    group: willian
   with_items:
           - { src: 'bash_aliases', path: '.bash_aliases' }
+          - { src: 'bash_logout', path: '.bash_logout' }
           - { src: 'bashrc', path: '.bashrc' }
           - { src: 'gitconfig', path: '.gitconfig' }
           - { src: 'tmux.conf', path: '.tmux.conf' }
           - { src: 'vimrc', path: '.vimrc' }
+  tags: dotfiles

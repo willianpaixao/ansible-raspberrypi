@@ -6,8 +6,16 @@
   with_items:
     - git
     - git-doc
+  tags: git
 
 - name: Install vim
   package:
     name: vim
     state: present
+  tags: vim
+
+- name: Install tmux
+  package:
+    name: tmux
+    state: present
+  tags: tmux

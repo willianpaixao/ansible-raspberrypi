@@ -2,7 +2,7 @@
 - name: Install i3
   package:
     name: "{{ item }}"
-    state: latest
+    state: present
   with_items:
     - i3
     - i3blocks

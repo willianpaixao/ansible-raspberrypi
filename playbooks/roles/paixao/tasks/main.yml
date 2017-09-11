@@ -1,3 +1,6 @@
 ---
 - include: dotfiles.yml
-  tags: git
+  tags: dotfiles
+
+- include: tmux.yml
+  tags: tmux
