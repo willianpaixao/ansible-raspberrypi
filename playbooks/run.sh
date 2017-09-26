@@ -1,8 +1,17 @@
-#!/bin/sh
+#!/bin/bash
 
-if [ -z ${VIRTUAL_ENV} ];
+ENV=.env
+
+if [ -z "${VIRTUAL_ENV}" ];
 then
-  source .env/bin/activate
-else
-  ansible-playbook -i hosts main.yml --tags tmux
+  if [ -d "${ENV}" ];
+  then
+    source ${ENV}/bin/activate
+  else
+    virtualenv ${ENV}
+    source ${ENV}/bin/activate
+    pip install -r requirements.txt
+  fi
 fi	
+
+ansible-playbook -i hosts main.yml --tags tmux

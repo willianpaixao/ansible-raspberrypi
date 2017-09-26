@@ -9,3 +9,10 @@
     path: /boot/config.txt
     state: present
     line: 'display_rotate=3'
+
+- name: Remove pi user
+  user:
+    name: pi
+    state: absent
+    remove: yes
+  tags: user

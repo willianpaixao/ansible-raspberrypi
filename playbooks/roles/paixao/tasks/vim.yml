@@ -1,0 +1,8 @@
+---
+- name: Clone Vundle repository
+  git:
+    repo: 'https://github.com/VundleVim/Vundle.vim.git'
+    dest: /home/willian/.vim/bundle/Vundle.vim
+  become: true
+  become_user: willian
+  tags: vim
