@@ -6,5 +6,5 @@ python:
 install:
   - pip install -r playbooks/requirements.txt
 
-scripts:
+script:
   - ansible-lint playbooks/main.yml
