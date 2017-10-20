@@ -5,4 +5,6 @@
     dest: /home/willian/.vim/bundle/Vundle.vim
   become: true
   become_user: willian
-  tags: vim
+  tags:
+    - skip_ansible_lint
+    - vim
