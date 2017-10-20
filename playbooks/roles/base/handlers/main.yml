@@ -1,3 +1,6 @@
 ---
+- include: ntp.yml
+  tags: ntp
+
 - include: ssh.yml
   tags: ssh

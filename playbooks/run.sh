@@ -2,6 +2,7 @@
 
 ENV=".env"
 INVENTORY="hosts.yml"
+PLAYBOOK="main.yml"
 
 if [ -z "${VIRTUAL_ENV}" ];
 then
@@ -15,4 +16,7 @@ then
   fi
 fi	
 
-ansible-playbook -i "${INVENTORY}" main.yml --verbose
+ansible-playbook \
+  --verbose \
+  --inventory-file="${INVENTORY}" \
+  "${PLAYBOOK}"

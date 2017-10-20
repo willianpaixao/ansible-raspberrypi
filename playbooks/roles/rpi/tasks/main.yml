@@ -3,6 +3,7 @@
   file:
     path: /boot/ssh
     state: touch
+  tags: ssh
 
 - name: Rotate screen 270 degrees
   lineinfile:

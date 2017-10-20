@@ -1,4 +1,7 @@
 ---
+# file: main.yml
+# version: v1.0
+
 - name: Top level playbook
   hosts: all
   become: true

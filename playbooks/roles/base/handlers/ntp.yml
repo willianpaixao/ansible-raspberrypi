@@ -1,0 +1,9 @@
+---
+# file: roles/base/handlers/ntp.yml
+
+- name: Restart ntp
+  service:
+    name: ntp
+    state: restarted
+  tags: ntp
+

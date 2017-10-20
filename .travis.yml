@@ -7,4 +7,7 @@ install:
   - pip install -r playbooks/requirements.txt
 
 script:
+  - ansible-playbook --inventory-file=playbooks/hosts.yml playbooks/main.yml --check
+  - ansible-playbook --inventory-file=playbooks/hosts.yml playbooks/main.yml --list-tasks
+  - ansible-playbook --inventory-file=playbooks/hosts.yml playbooks/main.yml --syntax-check
   - ansible-lint playbooks/main.yml
