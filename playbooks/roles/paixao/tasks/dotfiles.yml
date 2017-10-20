@@ -3,6 +3,7 @@
   git:
     repo: 'https://github.com/willianpaixao/dotfiles.git'
     dest: /home/willian/dev/dotfiles
+    version: v0.3
   become: true
   become_user: willian
   tags: dotfiles

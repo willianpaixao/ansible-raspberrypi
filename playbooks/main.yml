@@ -1,5 +1,5 @@
 ---
-- name: Top level playbook.
+- name: Top level playbook
   hosts: all
   become: true
   roles:

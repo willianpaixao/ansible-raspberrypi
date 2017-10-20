@@ -1,6 +1,7 @@
 #!/bin/bash
 
-ENV=.env
+ENV=".env"
+INVENTORY="hosts.yml"
 
 if [ -z "${VIRTUAL_ENV}" ];
 then
@@ -14,4 +15,4 @@ then
   fi
 fi	
 
-ansible-playbook -i hosts main.yml --tags tmux
+ansible-playbook -i "${INVENTORY}" main.yml --verbose

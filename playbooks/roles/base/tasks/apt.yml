@@ -2,9 +2,11 @@
 - name: Ensure the cache is updated
   apt:
     update_cache: yes
+  when: ansible_os_family == "Debian"
   tags: apt
 
 - name: Ensure the packages are upgraded
   apt:
     upgrade: dist
+  when: ansible_os_family == "Debian"
   tags: apt
