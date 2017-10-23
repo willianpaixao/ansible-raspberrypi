@@ -14,17 +14,17 @@ ansible-review
 
 ## Installation using pip
 ```
-pip install ansible
-pip install ansible-lint
-pip install ansible-review
+$ pip install ansible
+$ pip install ansible-lint
+$ pip install ansible-review
 ```
 
 ## How to Run
 ```
-git clone https://github.com/willianpaixao/spoon.git
-cd playbooks
-virtualenv .env
-source .env/bin/activate
-pip install -r requirements.txt
-./run.sh
+$ git clone https://github.com/willianpaixao/spoon.git
+$ cd playbooks
+$ virtualenv .env
+$ source .env/bin/activate
+$ pip install -r requirements.txt
+$ ./run.sh
 ```
