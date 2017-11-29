@@ -1,0 +1,68 @@
+---
+# file: roles/rpi/tasks/geth.yml
+
+- name: Download Go for ARMv6
+  get_url:
+    url: https://redirector.gvt1.com/edgedl/go/go1.9.2.linux-armv6l.tar.gz
+    dest: /tmp/go1.9.2.linux-armv6l.tar.gz
+    checksum: sha256:8a6758c8d390e28ef2bcea511f62dcb43056f38c1addc06a8bc996741987e7bb
+  tags: go
+
+- name: Extract Go tarball
+  unarchive:
+    src: /tmp/go1.9.2.linux-armv6l.tar.gz
+    dest: /usr/local
+    remote_src: yes
+  tags: go
+
+- name: Add Go binaries to the PATH
+  file:
+    src: '/usr/local/go/bin/{{ item.src }}'
+    path: '/usr/local/bin/{{ item.path }}'
+    state: link
+    force: yes
+  with_items:
+    - { src: 'go', path: 'go' }
+    - { src: 'godoc', path: 'godoc' }
+    - { src: 'gofmt', path: 'gofmt' }
+  tags: go
+
+- name: Download Geth for ARMv6
+  get_url:
+    url: https://gethstore.blob.core.windows.net/builds/geth-alltools-linux-arm6-1.7.3-4bb3c89d.tar.gz
+    dest: /tmp/geth-alltools-linux-arm6-1.7.3-4bb3c89d.tar.gz
+    checksum: md5:3dc22786c781437e3123c520c07710e2
+  tags: geth
+
+- name: Extract Geth tarball
+  unarchive:
+    src: /tmp/geth-alltools-linux-arm6-1.7.3-4bb3c89d.tar.gz
+    dest: /tmp
+    remote_src: yes
+  tags: geth
+
+- name: Create Geth permanent folder
+  file:
+    path: /usr/local/geth
+    state: directory
+  tags: geth
+
+- name: Move Geth binaries permanent folder
+  copy:
+    src: '/tmp/geth-alltools-linux-arm6-1.7.3-4bb3c89d/{{ item.src }}'
+    dest: '/usr/local/geth/{{ item.path }}'
+    mode: 0755
+    remote_src: yes
+  with_items:
+    - { src: 'geth', path: 'geth' }
+  tags: geth
+
+- name: Add Geth binaries to the PATH
+  file:
+    src: '/usr/local/geth/{{ item.src }}'
+    path: '/usr/local/bin/{{ item.path }}'
+    state: link
+    force: yes
+  with_items:
+    - { src: 'geth', path: 'geth' }
+  tags: geth

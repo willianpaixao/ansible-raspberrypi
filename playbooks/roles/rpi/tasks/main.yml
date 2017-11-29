@@ -1,4 +1,5 @@
 ---
+
 - name: Enable SSH on boot
   file:
     path: /boot/ssh
@@ -17,3 +18,12 @@
     state: absent
     remove: yes
   tags: user
+
+- name: Rename hostname
+  hostname:
+    name: spoon
+  tags: hostname
+
+- include: geth.yml
+  tags: geth
+
