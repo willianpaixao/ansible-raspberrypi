@@ -1,10 +1,9 @@
 ---
 - name: Install i3
   package:
-    name: "{{ item }}"
+    name:
+      - i3
+      - i3blocks
+      - xorg
     state: present
-  with_items:
-    - i3
-    - i3blocks
-    - xorg
   tags: i3
