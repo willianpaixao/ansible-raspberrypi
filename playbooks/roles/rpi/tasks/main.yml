@@ -27,3 +27,6 @@
 - include: geth.yml
   tags: geth
 
+- include: terraform.yml
+  tags: terraform
+

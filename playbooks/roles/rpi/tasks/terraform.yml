@@ -1,0 +1,16 @@
+---
+# file: roles/rpi/tasks/terraform.yml
+
+- name: Download terraform for ARMv6
+  get_url:
+    url: https://releases.hashicorp.com/terraform/0.11.1/terraform_0.11.1_linux_arm.zip
+    dest: /tmp/terraform_0.11.1_linux_arm.zip
+    checksum: sha256:5fecc1f1f5b35ee3d46f6867a58c1452bfde09c27258cd8c7c73850a43b015f2
+  tags: terraform
+
+- name: Extract terraform archive
+  unarchive:
+    src: /tmp/terraform_0.11.1_linux_arm.zip
+    dest: /usr/local/bin
+    remote_src: yes
+  tags: terraform
