@@ -1,3 +1,5 @@
 ansible
 ansible-lint
 ansible-review
+cryptography
+pre-commit

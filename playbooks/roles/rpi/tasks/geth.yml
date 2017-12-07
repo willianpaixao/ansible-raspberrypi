@@ -55,6 +55,7 @@
     remote_src: yes
   with_items:
     - { src: 'geth', path: 'geth' }
+    - { src: 'swarm', path: 'swarm' }
   tags: geth
 
 - name: Add Geth binaries to the PATH
@@ -65,4 +66,5 @@
     force: yes
   with_items:
     - { src: 'geth', path: 'geth' }
+    - { src: 'swarm', path: 'swarm' }
   tags: geth
