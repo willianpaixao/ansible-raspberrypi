@@ -6,7 +6,7 @@
 ENV=".env"
 INVENTORY="hosts.yml"
 PLAYBOOK="site.yml"
-TAGS="geth"
+TAGS="irrsi"
 
 # Creating and activating your virtualenv with all the dependencies.
 if [ -z "${VIRTUAL_ENV}" ];

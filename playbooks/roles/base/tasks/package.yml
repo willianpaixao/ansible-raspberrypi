@@ -22,3 +22,9 @@
     name: tmux
     state: present
   tags: tmux
+
+- name: Install irssi
+  package:
+    name: irssi
+    state: present
+  tags: irrsi
