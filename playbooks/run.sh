@@ -6,7 +6,7 @@
 ENV=".env"
 INVENTORY="hosts.yml"
 PLAYBOOK="site.yml"
-TAGS="base,rpi"
+TAGS="i3"
 
 # Creating and activating your virtualenv with all the dependencies.
 if [ -z "${VIRTUAL_ENV}" ];
@@ -33,11 +33,10 @@ if [ $? -eq 0 ]
 then
   # Running ansible-playbook with many arguments.
   # NOTE: The arguments '--limit' and '--tags' are optionals.
-  # NOTE: The argument '--check' will perform a "Dry Run" check. It's also
-  # optional.
+  # NOTE: The argument '--check' will perform a "Dry Run" check.
+  # NOTE: Add '--ask-become-pass' for users with password
   ansible-playbook \
     --verbose \
-    --ask-become-pass \
     --inventory-file="${INVENTORY}" \
     --tags="${TAGS}" \
     --skip-tags never \

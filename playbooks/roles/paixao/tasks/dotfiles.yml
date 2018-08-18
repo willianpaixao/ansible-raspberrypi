@@ -1,16 +1,20 @@
 ---
+# file: roles/paixao/tasks/dotfiles.yml
+
 - name: Clone repository
   git:
     repo: 'https://github.com/willianpaixao/dotfiles.git'
-    dest: /home/willian/dev/dotfiles
-    version: v0.3
+    dest: /home/willian/dev/paixao/dotfiles
+    version: HEAD
   become: true
   become_user: willian
-  tags: dotfiles
+  tags:
+    - dotfiles
+    - git
 
 - name: Create symbolic links
   file:
-    src: '/home/willian/dev/dotfiles/{{ item.src }}'
+    src: '/home/willian/dev/paixao/dotfiles/{{ item.src }}'
     path: '/home/willian/{{ item.path }}'
     state: link
     force: yes
@@ -18,9 +22,12 @@
   become_user: willian
   with_items:
           - { src: 'bash_aliases', path: '.bash_aliases' }
+          - { src: 'bash_completion', path: '.bash_completion' }
           - { src: 'bash_logout', path: '.bash_logout' }
           - { src: 'bashrc', path: '.bashrc' }
           - { src: 'gitconfig', path: '.gitconfig' }
           - { src: 'tmux.conf', path: '.tmux.conf' }
           - { src: 'vimrc', path: '.vimrc' }
+          - { src: 'xinitrc', path: '.xinitrc' }
+          - { src: 'Xresources', path: '.Xresources' }
   tags: dotfiles

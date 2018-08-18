@@ -1,32 +1,40 @@
 ---
+# file: roles/rpi/tasks/main.yml
 
 - name: Enable SSH on boot
   file:
     path: /boot/ssh
     state: touch
-  tags: ssh
+  tags:
+    - rpi
+    - ssh
 
-- name: Rotate screen 270 degrees
-  lineinfile:
-    path: /boot/config.txt
-    state: present
-    line: 'display_rotate=3'
+- name: Rename hostname
+  hostname:
+    name: spoon
+  tags:
+    - rpi
+    - hostname
 
 - name: Remove pi user
   user:
     name: pi
     state: absent
     remove: yes
-  tags: user
+  tags:
+    - rpi
+    - user
 
-- name: Rename hostname
-  hostname:
-    name: spoon
-  tags: hostname
+- name: Rotate screen 270 degrees
+  lineinfile:
+    path: /boot/config.txt
+    state: present
+    line: 'display_rotate=3'
+  tags: never
 
-- include: geth.yml
-  tags: geth
+- import_tasks: geth.yml
+  tags: never
 
-- include: terraform.yml
-  tags: terraform
+- import_tasks: terraform.yml
+  tags: never
 

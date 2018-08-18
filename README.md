@@ -1,30 +1,28 @@
-Spoon is a Repository with useful playbooks for managing Raspberry Pi with Ansible
+[![pipeline status](https://gitlab.com/willianpaixao/spoon/badges/master/pipeline.svg)](https://gitlab.com/willianpaixao/spoon/commits/master)
 
-## Setup Raspberry Pi
+`spoon` is the name of my RPi 3B+ that server as personal server.
+This repository is a collection of Ansible roles that setup most the
+configuration needed.
 
-Here is a [detailed guide](https://sendgrid.com/blog/complete-guide-set-raspberry-pi-without-keyboard-mouse/) to setup Raspberry Pi without a Keyboard & Mouse
+## Getting started
 
+The only previous step is enable SSH server at the RPi OS.
 
-## Requirements
-```
-ansible
-ansible-lint
-ansible-review
-```
+> NOTE: I only have tested this playbook under Debian, although many tasks are
+> OS independent.
 
-## Installation using pip
-```
-$ pip install ansible
-$ pip install ansible-lint
-$ pip install ansible-review
+First step is cloning the repository:
+``` bash
+$ git clone https://gitlab.com/willianpaixao/spoon
 ```
 
-## How to Run
-```
-$ git clone https://github.com/willianpaixao/spoon.git
+The create the environment and download the dependencies:
+``` bash
 $ cd playbooks
 $ virtualenv .env
 $ source .env/bin/activate
 $ pip install -r requirements.txt
-$ ./run.sh
 ```
+
+## Roles
+* `base/`

@@ -1,11 +1,14 @@
 ---
 # file: roles/paixao/tasks/main.yml
 
-- include: dotfiles.yml
-  tags: dotfiles
+- import_tasks: dotfiles.yml
+  tags:
+    - paixao
 
-- include: tmux.yml
-  tags: tmux
+- import_tasks: tmux.yml
+  tags:
+    - paixao
 
-- include: vim.yml
-  tags: vim
+- import_tasks: vim.yml
+  tags:
+    - paixao

@@ -1,4 +1,6 @@
 ---
+# file: roles/i3/tasks/main.yml
+
 - name: Install i3
   package:
     name:

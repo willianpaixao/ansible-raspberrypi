@@ -1,4 +1,6 @@
 ---
+# file: roles/paixao/tasks/vim.yml
+
 - name: Clone Vundle repository
   git:
     repo: 'https://github.com/VundleVim/Vundle.vim.git'
