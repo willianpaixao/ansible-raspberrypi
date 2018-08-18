@@ -1,7 +1,7 @@
 ---
 # file: roles/base/tasks/time.yml
 
-- name: force all notified handlers to run at this point
+- name: Force all notified handlers to run at this point
   meta: flush_handlers
 
 - name: Install ntp

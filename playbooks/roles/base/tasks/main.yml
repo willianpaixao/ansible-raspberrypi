@@ -1,12 +1,14 @@
 ---
-- include: apt.yml
-  tags: apt
+# file: roles/base/tasks/main.yml
 
-- include: package.yml
-  tags: package
+- import_tasks: apt.yml
+  tags: base
 
-- include: time.yml
-  tags: ntp
+- import_tasks: package.yml
+  tags: base
 
-- include: user.yml
-  tags: ssh
+- import_tasks: time.yml
+  tags: base
+
+- import_tasks: user.yml
+  tags: base
