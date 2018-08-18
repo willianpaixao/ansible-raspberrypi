@@ -6,7 +6,7 @@
 ENV=".env"
 INVENTORY="hosts.yml"
 PLAYBOOK="site.yml"
-TAGS="irrsi"
+TAGS="base,rpi"
 
 # Creating and activating your virtualenv with all the dependencies.
 if [ -z "${VIRTUAL_ENV}" ];
@@ -22,7 +22,10 @@ then
 fi
 
 # Test connectivity with the targeted hosts.
-ansible --module-name=ping \
+# NOTE: Add '--ask-pass' for users with password
+ansible \
+  --module-name=ping \
+  --verbose \
   --inventory-file="${INVENTORY}" \
   all
 
@@ -37,5 +40,6 @@ then
     --ask-become-pass \
     --inventory-file="${INVENTORY}" \
     --tags="${TAGS}" \
+    --skip-tags never \
     "${PLAYBOOK}"
 fi
