@@ -12,3 +12,6 @@
 
 - import_tasks: user.yml
   tags: base
+
+- import_tasks: stats.yml
+  tags: base

@@ -1,0 +1,5 @@
+---
+# file: roles/paixao/vars/main.yml
+
+dotfiles_url: https://gitlab.com/willianpaixao/dotfiles.git
+dotfiles_dir: /home/willian/dev/paixao/dotfiles

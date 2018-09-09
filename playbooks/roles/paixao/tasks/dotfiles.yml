@@ -3,8 +3,8 @@
 
 - name: Clone repository
   git:
-    repo: 'https://github.com/willianpaixao/dotfiles.git'
-    dest: /home/willian/dev/paixao/dotfiles
+    repo: '{{ dotfiles_url }}'
+    dest: '{{ dotfiles_dir }}'
     version: HEAD
   become: true
   become_user: willian
@@ -14,7 +14,7 @@
 
 - name: Create symbolic links
   file:
-    src: '/home/willian/dev/paixao/dotfiles/{{ item.src }}'
+    src: '{{ dotfiles_dir }}/{{ item.src }}'
     path: '/home/willian/{{ item.path }}'
     state: link
     force: yes
@@ -31,3 +31,12 @@
           - { src: 'xinitrc', path: '.xinitrc' }
           - { src: 'Xresources', path: '.Xresources' }
   tags: dotfiles
+
+- name: Check git config
+  shell: git config --list
+  become: true
+  become_user: willian
+  tags:
+    - debug
+    - dotfiles
+    - git
