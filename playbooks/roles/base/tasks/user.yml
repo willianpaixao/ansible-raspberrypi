@@ -23,11 +23,15 @@
     state: present
     regexp: '^%sudo\s'
     line: '%sudo   ALL=(ALL:ALL) NOPASSWD:ALL'
-  tags: user
+  tags:
+    - user
+    - never
 
 - name: Change keyboard layout to Swedish
   lineinfile:
     path: /etc/default/keyboard
     regexp: '^XKBLAYOUT="gb"'
     line: 'XKBLAYOUT="se"'
-  tags: never
+  tags:
+    - user
+    - never

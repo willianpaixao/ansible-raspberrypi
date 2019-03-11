@@ -1,0 +1,5 @@
+---
+# file: roles/base/meta/main.yml
+
+dependencies:
+  - role: base

@@ -27,6 +27,7 @@ ansible \
   --module-name=ping \
   --verbose \
   --inventory-file="${INVENTORY}" \
+  --ask-pass \
   all
 
 if [ $? -eq 0 ]
@@ -40,5 +41,6 @@ then
     --inventory-file="${INVENTORY}" \
     --tags="${TAGS}" \
     --skip-tags never \
+    --ask-become-pass \
     "${PLAYBOOK}"
 fi
