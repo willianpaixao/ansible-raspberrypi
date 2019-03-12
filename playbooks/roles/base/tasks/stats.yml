@@ -1,6 +1,0 @@
----
-# file: roles/base/tasks/stats.yml
-
-- name: Check uptime
-  shell: /usr/bin/uptime
-  tags: uptime

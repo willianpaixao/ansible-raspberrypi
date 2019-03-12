@@ -5,7 +5,8 @@
   git:
     repo: '{{ dotfiles_url }}'
     dest: '{{ dotfiles_dir }}'
-    version: HEAD
+    verify_commit: true
+    version: master
   become: true
   become_user: willian
   tags:
@@ -31,12 +32,3 @@
           - { src: 'xinitrc', path: '.xinitrc' }
           - { src: 'Xresources', path: '.Xresources' }
   tags: dotfiles
-
-- name: Check git config
-  shell: git config --list
-  become: true
-  become_user: willian
-  tags:
-    - debug
-    - dotfiles
-    - git

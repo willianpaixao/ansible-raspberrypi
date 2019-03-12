@@ -1,5 +1,16 @@
 ---
-# file: roles/base/meta/main.yml
+# file: roles/paixao/meta/main.yml
 
-dependencies:
-  - role: base
+galaxy_info:
+  role_name: paixao
+  author: Willian Paixao
+  description: Essential tasks for any newly created system
+  license: GPLv3
+  min_ansible_version: 2.7.8
+  platforms:
+    - name: Debian
+      version:
+        - jessie
+        - stretch
+  dependencies:
+    - role: base
