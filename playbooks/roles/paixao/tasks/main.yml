@@ -1,6 +1,10 @@
 ---
 # file: roles/paixao/tasks/main.yml
 
+- import_tasks: user.yml
+  tags:
+    - paixao
+
 - import_tasks: dotfiles.yml
   tags:
     - paixao

@@ -29,6 +29,4 @@
           - { src: 'gitconfig', path: '.gitconfig' }
           - { src: 'tmux.conf', path: '.tmux.conf' }
           - { src: 'vimrc', path: '.vimrc' }
-          - { src: 'xinitrc', path: '.xinitrc' }
-          - { src: 'Xresources', path: '.Xresources' }
   tags: dotfiles

@@ -26,6 +26,7 @@ $ git clone https://gitlab.com/willianpaixao/ansible-raspberrypi
 
 * Then create the environment and download the dependencies:
 ``` bash
+$ pip install --user virtualenv
 $ cd playbooks
 $ virtualenv .env
 $ source .env/bin/activate
@@ -37,6 +38,7 @@ There's a bash script to bootstrap the execution of the playbooks. Check the con
 $ ./run.sh
 ```
 > NOTE: Depending on your RPi settings, you might need to provide password.
+> NOTE: A ping is performed to check host's connectivity. You need `sshpass` installed for this feature.
 
 ## Roles
 * `base/` First and most basic role. It upgrade system packages, install necessary command tools like Git, Vim and Tmux.

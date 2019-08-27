@@ -8,14 +8,18 @@
     comment: "Willian Paixao"
     groups: sudo
     append: yes
-  tags: user
+  tags:
+    - adduser
+    - user
 
-- name: Add ssh public key willianATatari
+- name: Add ssh public key willianATnintendo64
   authorized_key:
     user: willian
     state: present
     key: "{{ lookup('file', lookup('env','HOME') + '/.ssh/id_rsa.pub') }}"
-  tags: user
+  tags:
+    - ssh
+    - user
 
 - name: Change sudo to without password
   lineinfile:
