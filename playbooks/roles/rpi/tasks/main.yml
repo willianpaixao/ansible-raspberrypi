@@ -33,8 +33,10 @@
   tags: never
 
 - import_tasks: geth.yml
-  tags: never
+  tags: geth
 
 - import_tasks: terraform.yml
   tags: never
 
+- import_tasks: node-exporter.yml
+  tags: node-exporter

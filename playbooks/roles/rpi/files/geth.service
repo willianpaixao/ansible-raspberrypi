@@ -1,0 +1,21 @@
+[Unit]
+Description=Ethereum go client
+After=syslog.target network.target
+
+[Service]
+User=geth
+Group=geth
+Type=simple
+ExecStart=/usr/local/bin/geth --syncmode light --datadir /var/lib/geth
+Nice=10
+KillMode=process
+KillSignal=SIGINT
+TimeoutStopSec=90
+Restart=on-failure
+RestartSec=10s
+MemoryAccounting=true
+MemoryHigh=512M
+MemoryMax=768M
+
+[Install]
+WantedBy=multi-user.target
