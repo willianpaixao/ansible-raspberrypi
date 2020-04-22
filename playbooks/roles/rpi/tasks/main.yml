@@ -21,6 +21,15 @@
     name: pi
     state: absent
     remove: yes
+    force: yes
+  tags:
+    - rpi
+    - user
+
+- name: Remove pi group
+  group:
+    name: pi
+    state: absent
   tags:
     - rpi
     - user
@@ -40,3 +49,6 @@
 
 - import_tasks: node-exporter.yml
   tags: node-exporter
+
+- import_tasks: prometheus.yml
+  tags: prometheus

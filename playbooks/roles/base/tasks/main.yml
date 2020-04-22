@@ -3,6 +3,7 @@
 
 - import_tasks: apt.yml
   tags:
+    - apt
     - base
 
 - import_tasks: package.yml
