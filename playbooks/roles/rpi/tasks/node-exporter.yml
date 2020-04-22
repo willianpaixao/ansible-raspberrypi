@@ -13,7 +13,7 @@
     dest: /tmp
     remote_src: yes
 
-- name: Move Geth binaries to PATH
+- name: Move node-exporter binary to PATH
   copy:
     src: '/tmp/node_exporter-1.0.0-rc.0.linux-armv7/node_exporter'
     dest: '/usr/local/bin/node_exporter'
@@ -28,16 +28,29 @@
     - '/tmp/node_exporter-1.0.0-rc.0.linux-armv7'
     - '/tmp/node_exporter-1.0.0-rc.0.linux-armv7.tar.gz'
 
-
 - name: Copy systemd file for node-exporter service
-  copy:
-    src: node-exporter.service
+  template:
+    src: templates/node-exporter.service.j2
     dest: /lib/systemd/system/node-exporter.service
     owner: root
     group: root
     mode: '0644'
 
+- name: Copy node-exporter settings file
+  template:
+    src: templates/node-exporter.conf.j2
+    dest: /etc/default/node-exporter.conf
+    owner: root
+    group: root
+    mode: '0644'
+
 - name: Start node-exporter service
+  service:
+    name: node-exporter
+    state: restarted
+    daemon_reload: yes
+
+- name: Enable node-exporter service to start on boot
   service:
     name: node-exporter
     enabled: yes

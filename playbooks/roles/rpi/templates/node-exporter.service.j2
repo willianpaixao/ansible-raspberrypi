@@ -1,12 +1,14 @@
 [Unit]
 Description=Prometheus exporter for hardware and OS metrics exposed
+Documentation=https://github.com/prometheus/node_exporter
 After=syslog.target network.target
 
 [Service]
 User=root
 Group=root
 Type=simple
-ExecStart=/usr/local/bin/node_exporter
+EnvironmentFile=/etc/default/node-exporter.conf
+ExecStart=/usr/local/bin/node_exporter $ARGS
 Nice=10
 KillMode=process
 KillSignal=SIGINT
