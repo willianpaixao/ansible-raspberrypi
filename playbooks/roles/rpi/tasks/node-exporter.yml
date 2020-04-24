@@ -32,6 +32,7 @@
   template:
     src: templates/node-exporter.service.j2
     dest: /lib/systemd/system/node-exporter.service
+    validate: systemd-analyze verify %s
     owner: root
     group: root
     mode: '0644'

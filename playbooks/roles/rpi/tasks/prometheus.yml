@@ -26,6 +26,7 @@
   template:
     src: templates/prometheus.service.j2
     dest: /lib/systemd/system/prometheus.service
+    #validate: systemd-analyze verify %s
     owner: root
     group: root
     mode: '0644'
@@ -46,9 +47,10 @@
     group: root
     mode: '0644'
 
-    #- name: Delete unused files
-    #  file:
-    #    path: '{{ item }}'
-    #    state: absent
-    #  with_items:
-    #    - '/tmp/prometheus-2.17.2.linux-armv7.tar.gz'
+- name: Delete unused files
+  file:
+    path: '{{ item }}'
+    state: absent
+  with_items:
+    - '/tmp/prometheus-2.17.2.linux-armv7.tar.gz'
+    - '/tmp/prometheus-2.17.2.linux-armv7'
