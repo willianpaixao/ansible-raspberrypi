@@ -1,6 +1,6 @@
 ---
 # file: roles/rpi/defaults/main.yml
 
-geth_version: 1.9.13-cbc4ac26
-geth_md5: 67c9ce25e7ea1224641da9b385eb9270
+geth_version: 1.9.21-0287d548
+geth_md5: 7df8e22b5b344688dbeb5b665f19637d
 

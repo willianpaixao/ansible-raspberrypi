@@ -26,11 +26,11 @@ $ git clone https://gitlab.com/willianpaixao/ansible-raspberrypi
 
 * Then create the environment and download the dependencies:
 ``` bash
-$ pip install --user virtualenv
+$ python3 -m pip install --user virtualenv
 $ cd playbooks
 $ virtualenv .env
 $ source .env/bin/activate
-$ pip install -r requirements.txt
+$ python3 -m pip install -r requirements.txt
 ```
 
 There's a bash script to bootstrap the execution of the playbooks. Check the content of the file `run.sh`, changing the variables as you need and then execute it:
