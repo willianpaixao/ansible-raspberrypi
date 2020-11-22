@@ -1,35 +1,6 @@
 ---
 # file: roles/rpi/tasks/geth.yml
 
-- name: Download Geth for ARM64
-  get_url:
-    url: https://gethstore.blob.core.windows.net/builds/geth-alltools-linux-arm64-{{ geth_version }}.tar.gz
-    dest: /tmp/geth-alltools-linux-arm64-{{ geth_version }}.tar.gz
-    checksum: md5:{{ geth_md5 }}
-
-- name: Extract Geth tarball
-  unarchive:
-    src: /tmp/geth-alltools-linux-arm64-{{ geth_version }}.tar.gz
-    dest: /tmp
-    remote_src: yes
-
-- name: Move Geth binaries to PATH
-  copy:
-    src: '/tmp/geth-alltools-linux-arm64-{{ geth_version }}/{{ item.src }}'
-    dest: '/usr/local/bin/{{ item.path }}'
-    mode: 0755
-    remote_src: yes
-  with_items:
-    - { src: 'geth', path: 'geth' }
-
-- name: Delete unused files
-  file:
-    path: '{{ item }}'
-    state: absent
-  with_items:
-    - "/tmp/geth-alltools-linux-arm64-{{ geth_version }}"
-    - "/tmp/geth-alltools-linux-arm64-{{ geth_version }}.tar.gz"
-
 - name: Add the geth system group
   group:
     name: geth
@@ -42,6 +13,45 @@
     shell: /usr/bin/false
     system: yes
     group: geth
+
+- name: Download Geth for ARM64
+  get_url:
+    url: https://gethstore.blob.core.windows.net/builds/geth-alltools-linux-arm64-{{ geth_version }}.tar.gz
+    dest: /tmp/geth-alltools-linux-{{ geth_version }}.tar.gz
+    checksum: md5:{{ geth_md5 }}
+  when: ansible_architecture == "aarch64"
+
+- name: Download Geth for ARMv7
+  get_url:
+    url: https://gethstore.blob.core.windows.net/builds/geth-alltools-linux-arm7-{{ geth_version }}.tar.gz
+    dest: /tmp/geth-alltools-linux-{{ geth_version }}.tar.gz
+    checksum: md5:{{ geth_md5 }}
+  when: ansible_architecture == "armv7l"
+
+- name: Extract Geth tarball
+  unarchive:
+    src: /tmp/geth-alltools-linux-{{ geth_version }}.tar.gz
+    dest: /tmp
+    owner: geth
+    group: geth
+    remote_src: yes
+
+- name: Move Geth binaries to PATH
+  copy:
+    src: '/tmp/geth-alltools-linux-arm7-{{ geth_version }}/{{ item.src }}'
+    dest: '/usr/local/bin/{{ item.path }}'
+    mode: 0755
+    remote_src: yes
+  with_items:
+    - { src: 'geth', path: 'geth' }
+
+- name: Delete unused files
+  file:
+    path: '{{ item }}'
+    state: absent
+  with_items:
+    - "/tmp/geth-alltools-linux-{{ geth_version }}"
+    - "/tmp/geth-alltools-linux-{{ geth_version }}.tar.gz"
 
 - name: Create data directory for geth
   file:

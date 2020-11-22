@@ -55,3 +55,6 @@
 
 - import_tasks: grafana.yml
   tags: grafana
+
+- import_tasks: go.yml
+  tags: go

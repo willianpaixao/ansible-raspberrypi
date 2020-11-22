@@ -10,7 +10,7 @@
     state: present
   tags: ntp
 
-- name: Set timezone to Europe/Stockholm
+- name: Set timezone to Europe_Stockholm
   timezone:
     name: Europe/Stockholm
   notify: Restart ntp

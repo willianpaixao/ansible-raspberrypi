@@ -1,6 +1,9 @@
 ---
 # file: roles/rpi/defaults/main.yml
 
-geth_version: 1.9.21-0287d548
-geth_md5: 7df8e22b5b344688dbeb5b665f19637d
+geth_version: 1.9.24-cc05b050
+geth_md5: 2a7a634c4fb823827503477bf28cf32e
 
+node_exporter_version: 1.0.1
+
+prometheus_version: 2.22.2

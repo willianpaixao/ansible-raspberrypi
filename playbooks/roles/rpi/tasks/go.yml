@@ -1,0 +1,9 @@
+---
+# file: roles/rpi/tasks/go.yml
+
+- name: Download and extract Go tarball
+  unarchive:
+    src: https://golang.org/dl/go1.15.5.linux-armv6l.tar.gz
+    dest: /usr/local
+    remote_src: yes
+  when: ansible_architecture == "armv6l" or ansible_architecture == "armv7l"

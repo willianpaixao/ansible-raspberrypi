@@ -6,7 +6,7 @@ After=syslog.target network.target
 User=geth
 Group=geth
 Type=simple
-ExecStart=/usr/local/bin/geth --syncmode light --datadir /var/lib/geth --http --http.addr 0.0.0.0 --cache=768 --nousb
+ExecStart=/usr/local/bin/geth --datadir /var/lib/geth --http --http.addr 0.0.0.0 --cache=768 --nousb
 Nice=10
 KillMode=process
 KillSignal=SIGINT
