@@ -5,4 +5,4 @@ lint:
   before_script:
     - pip install ansible
   script:
-    - ansible-lint site.yml 
+    - ansible-playbook --inventory playbooks/hosts.yml --syntax-check playbooks/site.yml
