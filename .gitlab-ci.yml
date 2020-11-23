@@ -1,12 +1,8 @@
-before_script:
-  - apt-get update -qq
-  - apt-get install -qq --no-install-recommends python-dev python-pip python-setuptools
-  - cd playbooks/ && pip install -r requirements.txt
+default:
+  image: python:3.8
 
-stages:
-  - ansible-lint
-
-ansible-lint:
-  stage: ansible-lint
+lint:
+  before_script:
+    - pip install ansible
   script:
-    - ansible-lint site.yml
+    - ansible-lint site.yml 

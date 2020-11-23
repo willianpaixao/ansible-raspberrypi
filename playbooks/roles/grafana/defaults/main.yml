@@ -1,0 +1,4 @@
+---
+# file: roles/grafana/defaults/main.yml
+
+grafana_version: 7.3.3

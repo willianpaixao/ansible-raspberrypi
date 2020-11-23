@@ -1,15 +1,6 @@
 ---
 # file: roles/base/tasks/package.yml
 
-- name: Install git
-  package:
-    name: "{{ item }}"
-    state: present
-  with_items:
-    - git
-    - git-doc
-  tags: git
-
 - name: Install vim
   package:
     name: "{{ item }}"
@@ -24,9 +15,3 @@
     name: tmux
     state: present
   tags: tmux
-
-- name: Install irssi
-  package:
-    name: irssi
-    state: present
-  tags: irrsi

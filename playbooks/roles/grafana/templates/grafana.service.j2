@@ -1,0 +1,20 @@
+[Unit]
+Description=The open-source platform for monitoring and observability
+Documentation=https://grafana.com/
+After=syslog.target network.target
+
+[Service]
+User=root
+Group=root
+Type=simple
+WorkingDirectory=/var/lib/grafana-{{ grafana_version }}
+ExecStart=/var/lib/grafana-{{ grafana_version }}/bin/grafana-server
+Nice=10
+KillMode=process
+KillSignal=SIGINT
+TimeoutStopSec=90
+Restart=on-failure
+RestartSec=10s
+
+[Install]
+WantedBy=multi-user.target

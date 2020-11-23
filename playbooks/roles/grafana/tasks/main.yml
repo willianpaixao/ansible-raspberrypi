@@ -1,0 +1,29 @@
+---
+# file: roles/grafana/tasks/main.yml
+
+- name: Download and extract Grafana tarball (ARMv6)
+  unarchive:
+    src: https://dl.grafana.com/oss/release/grafana-{{ grafana_version }}.linux-armv6.tar.gz
+    dest: /var/lib
+    remote_src: yes
+    creates: '/var/lib/grafana-{{ grafana_version }}'
+  when: ansible_architecture == "armv6l"
+
+- name: Copy systemd file for Grafana service
+  template:
+    src: templates/grafana.service.j2
+    dest: /lib/systemd/system/grafana.service
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: Start Grafana service
+  service:
+    name: grafana
+    state: restarted
+    daemon_reload: yes
+
+- name: Enable Grafana service to start on boot
+  service:
+    name: grafana
+    enabled: yes

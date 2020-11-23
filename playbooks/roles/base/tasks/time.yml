@@ -1,17 +1,11 @@
 ---
 # file: roles/base/tasks/time.yml
 
-- name: Force all notified handlers to run at this point
-  meta: flush_handlers
-
-- name: Install ntp
-  package:
-    name: ntp
-    state: present
-  tags: ntp
-
-- name: Set timezone to Europe_Stockholm
-  timezone:
+- name: Set timezone to Europe/Stockholm
+  community.general.timezone:
     name: Europe/Stockholm
-  notify: Restart ntp
-  tags: ntp
+
+- name: Restart service cron
+  service:
+    name: cron
+    state: restarted

@@ -1,12 +1,20 @@
 ---
-# file: main.yml
-# version: v1.0
+# file: site.yml
+# version: v1.1
 
-- name: Top level playbook
+- name: Install base packages
   hosts: all
-  become: true
-  roles:
-    - base
-    - i3
-    - paixao
-    - rpi
+  tasks:
+  - import_role:
+      name: base
+    tags: base
+
+- name: Install monitoring tools
+  hosts: vigilant
+  tasks:
+  - import_role:
+      name: prometheus
+    tags: prometheus
+  - import_role:
+      name: grafana
+    tags: grafana

@@ -1,5 +1,0 @@
-ansible>=2.8.4
-ansible-lint
-ansible-review
-cryptography
-pre-commit

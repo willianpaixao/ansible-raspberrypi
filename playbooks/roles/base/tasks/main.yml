@@ -2,14 +2,10 @@
 # file: roles/base/tasks/main.yml
 
 - import_tasks: apt.yml
-  tags:
-    - apt
-    - base
+  tags: apt
 
 - import_tasks: package.yml
-  tags:
-    - base
+  tags: apt
 
 - import_tasks: time.yml
-  tags:
-    - base
+  tags: time
