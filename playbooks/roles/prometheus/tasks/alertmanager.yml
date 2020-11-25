@@ -1,0 +1,35 @@
+
+- name: Extract Alertmanager tarball (ARMv6)
+  unarchive:
+    src: https://github.com/prometheus/alertmanager/releases/download/v0.21.0/alertmanager-0.21.0.linux-armv6.tar.gz
+    dest: /tmp
+    remote_src: yes
+    creates: '/tmp/alertmanager-0.21.0.linux-armv6.tar.gz'
+  when: ansible_architecture == "armv6l"
+
+- name: Move Alertmanager binaries to PATH (ARMv6)
+  copy:
+    src: '/tmp/alertmanager-0.21.0.linux-armv6/{{ item }}'
+    dest: '/usr/local/bin/{{ item }}'
+    mode: 0755
+    remote_src: yes
+  with_items:
+    - 'alertmanager'
+    - 'amtool'
+  when: ansible_architecture == "armv6l"
+
+- name: Create a directory if it does not exist
+  file:
+    path: /etc/alertmanager
+    state: directory
+    owner: root
+    group: root
+    mode: '0755'
+
+- name: Copy Alertmanager configuration file
+  template:
+    src: templates/alertmanager.yml.j2
+    dest: /etc/alertmanager/alertmanager.yml
+    owner: root
+    group: root
+    mode: '0644'

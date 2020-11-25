@@ -5,16 +5,31 @@
 - name: Install base packages
   hosts: all
   tasks:
-  - import_role:
-      name: base
-    tags: base
+    - import_role:
+        name: base
+      tags: base
 
-- name: Install monitoring tools
-  hosts: vigilant
+- name: Install monitoring tools (server)
+  hosts: monitoring
   tasks:
-  - import_role:
-      name: prometheus
-    tags: prometheus
-  - import_role:
-      name: grafana
-    tags: grafana
+    - import_role:
+        name: prometheus
+      tags: prometheus
+    - import_role:
+        name: grafana
+      tags: grafana
+
+- name: Install monitoring tools (agents)
+  hosts: logos,nebuchadnezzar
+  tasks:
+    - import_role:
+        name: prometheus
+        tasks_from: node-exporter.yml
+  tags: node-exporter
+
+- name: Install Chainlink node
+  hosts: logos
+  tasks:
+    - import_role:
+        name: chainlink
+      tags: chainlink
