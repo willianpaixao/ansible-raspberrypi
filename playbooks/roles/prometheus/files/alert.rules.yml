@@ -1,0 +1,48 @@
+groups:
+- name: Nodes
+
+  rules:
+  - alert: NodeDown
+    expr: up{job="node"} == 0
+    for: 5m
+    labels:
+      severity: critical
+    annotations:
+      summary: "Instance {{ $labels.instance }} down"
+      description: "{{ $labels.instance }} has been down for more than 5 minutes."
+
+  - alert: NodeCPUThrottling
+    expr: node_thermal_zone_temp > 75
+    for: 5m
+    labels:
+      severity: warning
+    annotations:
+      summary: "Instance {{ $labels.instance }} is throttling"
+      description: "{{ $labels.instance }} has been over 75 degrees Celsius and the CPU is throttling."
+
+  - alert: NodeOutOfMemory
+    expr: node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes * 100 < 5
+    for: 5m
+    labels:
+      severity: warning
+    annotations:
+      summary: "Instance {{ $labels.instance }} is out of memory"
+      description: "{{ $labels.instance }} has less than 5% of free memory."
+
+  - alert: NodeOutOfDiskSpace
+    expr: node_filesystem_avail_bytes{mountpoint="/"} / node_filesystem_size_bytes{mountpoint="/"} * 100 < 5
+    for: 5m
+    labels:
+      severity: warning
+    annotations:
+      summary: "Instance {{ $labels.instance }} is out of free disk space"
+      description: "{{ $labels.instance }} has less than 5% of free space in the root partition."
+
+  - alert: NodeOutOfInodes
+    expr: node_filesystem_files_free{mountpoint ="/"} / node_filesystem_files{mountpoint ="/"} * 100 < 5
+    for: 5m
+    labels:
+      severity: warning
+    annotations:
+      summary: "Instance {{ $labels.instance }} is out of free inodes"
+      description: "{{ $labels.instance }} has less than 5% of free inodes in the root partition."

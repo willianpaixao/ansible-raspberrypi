@@ -26,10 +26,3 @@
         name: prometheus
         tasks_from: node-exporter.yml
   tags: node-exporter
-
-- name: Install Chainlink node
-  hosts: logos
-  tasks:
-    - import_role:
-        name: chainlink
-      tags: chainlink
