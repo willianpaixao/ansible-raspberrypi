@@ -1,0 +1,59 @@
+---
+# file: roles/grafana/tasks/promtail.yml
+
+- name: Install unzip
+  ansible.builtin.package:
+    name: unzip
+    state: present
+
+- name: Download and extract Promtail tarball (ARM64)
+  ansible.builtin.unarchive:
+    src: https://github.com/grafana/loki/releases/download/v{{ promtail_version }}/promtail-linux-arm64.zip
+    dest: /usr/local/bin
+    creates: /usr/local/bin/promtail-linux-arm64
+    remote_src: yes
+  when: ansible_architecture == 'aarch64'
+
+- name: Create a link to the binary
+  ansible.builtin.file:
+    src: /usr/local/bin/promtail-linux-arm64
+    dest: /usr/local/bin/promtail
+    state: link
+    owner: root
+    group: root
+    mode: '0755'
+
+- name: Create a directory if it does not exist
+  ansible.builtin.file:
+    path: /etc/grafana
+    state: directory
+    owner: root
+    group: root
+    mode: '0755'
+
+- name: Copy Promtail config file
+  ansible.builtin.copy:
+    src: promtail.yml
+    dest: /etc/grafana/promtail.yml
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: Copy Promtail service file
+  ansible.builtin.copy:
+    src: promtail.service
+    dest: /lib/systemd/system/promtail.service
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: Start Promtail service
+  ansible.builtin.service:
+    name: promtail
+    state: restarted
+    daemon_reload: yes
+
+- name: Enable Promtail service to start on boot
+  ansible.builtin.service:
+    name: promtail
+    enabled: yes

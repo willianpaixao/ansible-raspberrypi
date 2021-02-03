@@ -1,0 +1,19 @@
+[Unit]
+Description=Loki is a horizontally-scalable, highly-available, multi-tenant log aggregation system inspired by Prometheus
+Documentation=https://grafana.com/docs/loki/latest/clients/promtail/
+After=syslog.target network.target
+
+[Service]
+User=root
+Group=root
+Type=simple
+ExecStart=/usr/local/bin/promtail -config.file=/etc/grafana/promtail.yml
+Nice=10
+KillMode=process
+KillSignal=SIGINT
+TimeoutStopSec=90
+Restart=on-failure
+RestartSec=10s
+
+[Install]
+WantedBy=multi-user.target

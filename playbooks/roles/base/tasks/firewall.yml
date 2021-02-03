@@ -1,0 +1,19 @@
+- name: Allow SSH
+  community.general.ufw:
+    rule: allow
+    name: OpenSSH
+  when: ansible_facts['distribution'] == "Ubuntu"
+
+- name: Limit connections on SSH
+  community.general.ufw:
+    rule: limit
+    port: ssh
+    proto: tcp
+  when: ansible_facts['distribution'] == "Ubuntu"
+
+- name: Allow all access to tcp port 9100
+  community.general.ufw:
+    rule: allow
+    port: '9100'
+    proto: tcp
+  when: ansible_facts['distribution'] == "Ubuntu"

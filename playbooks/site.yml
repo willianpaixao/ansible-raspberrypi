@@ -20,9 +20,38 @@
       tags: grafana
 
 - name: Install monitoring tools (agents)
-  hosts: logos,nebuchadnezzar
+  hosts: all
   tasks:
     - import_role:
         name: prometheus
         tasks_from: node-exporter.yml
   tags: node-exporter
+
+- name: Install logging aggregation (agents)
+  hosts: mjolnir
+  tasks:
+    - import_role:
+        name: grafana
+        tasks_from: promtail.yml
+  tags: promtail
+
+- name: Install Geth
+  hosts: geth
+  tasks:
+    - import_role:
+        name: rpi
+        tasks_from: geth.yml
+  tags: geth
+
+- name: Install Tor relays
+  hosts: relays
+  vars:
+    tor_ContactInfo: willian@ufpa.br
+    tor_signingkeylifetime_days: 90
+    tor_nickname: "{{ ansible_hostname }}"
+    tor_ports:
+        - { orport: 443, dirport: 80}
+  tasks:
+    - import_role:
+        name: nusenu.relayor
+  tags: tor

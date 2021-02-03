@@ -5,7 +5,7 @@
   community.general.timezone:
     name: Europe/Stockholm
 
-- name: Restart service cron
+- name: Restart cron
   service:
     name: cron
     state: restarted

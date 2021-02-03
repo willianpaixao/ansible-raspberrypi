@@ -1,8 +1,8 @@
 ---
 # file: roles/rpi/defaults/main.yml
 
-geth_version: 1.9.24-cc05b050
-geth_md5: 2a7a634c4fb823827503477bf28cf32e
+geth_version: 1.9.25-e7872729
+geth_md5: 2cf7284a29667081760abfd33dbc47f2
 
 node_exporter_version: 1.0.1
 

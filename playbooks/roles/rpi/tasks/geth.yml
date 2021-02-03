@@ -38,7 +38,7 @@
 
 - name: Move Geth binaries to PATH
   copy:
-    src: '/tmp/geth-alltools-linux-arm7-{{ geth_version }}/{{ item.src }}'
+    src: '/tmp/geth-alltools-linux-arm64-{{ geth_version }}/{{ item.src }}'
     dest: '/usr/local/bin/{{ item.path }}'
     mode: 0755
     remote_src: yes
@@ -72,8 +72,7 @@
 - name: Install pcscd
   package:
     update_cache: yes
-    name:
-      - pcscd
+    name: pcscd
     state: present
 
 - name: Start Geth service
