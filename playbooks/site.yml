@@ -43,6 +43,14 @@
         tasks_from: geth.yml
   tags: geth
 
+- name: Clean packages
+  hosts: logos
+  tasks:
+    - import_role:
+        name: rpi
+        tasks_from: snap.yml
+  tags: snap
+
 - name: Install Tor relays
   hosts: relays
   vars:

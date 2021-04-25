@@ -58,3 +58,6 @@
 
 - import_tasks: go.yml
   tags: go
+
+- import_tasks: snap.yml
+  tags: snap

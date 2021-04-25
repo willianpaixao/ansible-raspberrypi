@@ -6,7 +6,7 @@ After=syslog.target network.target
 User=geth
 Group=geth
 Type=simple
-ExecStart=/usr/local/bin/geth --datadir /var/lib/geth --http --http.addr 0.0.0.0 --cache=4096 --nousb
+ExecStart=/usr/local/bin/geth --datadir /var/lib/geth --identity mjolnir --http --http.addr 0.0.0.0 --cache=4096 --nousb --snapshot=false
 Nice=10
 KillMode=process
 KillSignal=SIGINT
