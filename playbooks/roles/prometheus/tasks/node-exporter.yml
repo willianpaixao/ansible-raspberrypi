@@ -1,16 +1,16 @@
 ---
 # file: roles/prometheus/tasks/node-exporter.yml
 
-- name: Download and extract node-exporter tarball
-  unarchive:
+- name: "[{{ ansible_architecture }}] Download and extract node-exporter tarball"
+  ansible.builtin.unarchive:
     src: https://github.com/prometheus/node_exporter/releases/download/v{{ node_exporter_version }}/node_exporter-{{ node_exporter_version }}.linux-arm64.tar.gz
     dest: /tmp
     remote_src: yes
     creates: '/tmp/node_exporter-{{ node_exporter_version }}.linux-arm64.tar.gz'
   when: ansible_architecture == 'aarch64'
 
-- name: Download and extract node-exporter tarball (ARMv6)
-  unarchive:
+- name: "[{{ ansible_architecture }}] Download and extract node-exporter tarball"
+  ansible.builtin.unarchive:
     src: https://github.com/prometheus/node_exporter/releases/download/v{{ node_exporter_version }}/node_exporter-{{ node_exporter_version }}.linux-armv6.tar.gz
     dest: /tmp
     remote_src: yes
@@ -18,7 +18,7 @@
   when: ansible_architecture == 'armv7l'
 
 - name: Move node-exporter binary to PATH
-  copy:
+  ansible.builtin.copy:
     src: '/tmp/node_exporter-{{ node_exporter_version }}.linux-arm64/node_exporter'
     dest: '/usr/local/bin/node_exporter'
     mode: 0755
@@ -26,7 +26,7 @@
   when: ansible_architecture == 'aarch64'
 
 - name: Move node-exporter binary to PATH (ARMv6)
-  copy:
+  ansible.builtin.copy:
     src: '/tmp/node_exporter-{{ node_exporter_version }}.linux-armv6/node_exporter'
     dest: '/usr/local/bin/node_exporter'
     mode: 0755

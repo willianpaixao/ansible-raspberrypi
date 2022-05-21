@@ -1,21 +1,6 @@
 ---
 # file: roles/rpi/tasks/main.yml
 
-- name: Enable SSH on boot
-  file:
-    path: /boot/ssh
-    state: touch
-  tags:
-    - rpi
-    - ssh
-
-- name: Rename hostname
-  hostname:
-    name: spoon
-  tags:
-    - rpi
-    - hostname
-
 - name: Remove pi user
   user:
     name: pi
@@ -26,6 +11,19 @@
     - rpi
     - user
 
+- name: Copy systemd file for fan control
+  copy:
+    src: 50-rpi-fan.rules
+    dest: /etc/udev/rules.d/50-rpi-fan.rules
+    owner: root
+    group: root
+    mode: '0640'
+  tags: rpi
+
+- name: Reload udev rules
+  shell: udevadm control --reload-rules && udevadm trigger
+  tags: rpi
+
 - name: Remove pi group
   group:
     name: pi
@@ -33,22 +31,6 @@
   tags:
     - rpi
     - user
-
-- name: Rotate screen 270 degrees
-  lineinfile:
-    path: /boot/config.txt
-    state: present
-    line: 'display_rotate=3'
-  tags: never
-
-- import_tasks: geth.yml
-  tags: geth
-
-- import_tasks: terraform.yml
-  tags: never
-
-- import_tasks: node-exporter.yml
-  tags: node-exporter
 
 - import_tasks: prometheus.yml
   tags: prometheus

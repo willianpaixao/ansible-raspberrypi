@@ -2,6 +2,13 @@
 # file: site.yml
 # version: v1.1
 
+- name: Common Raspberry tasks
+  hosts: all
+  tasks:
+    - import_role:
+        name: rpi
+      tags: rpi
+
 - name: Install base packages
   hosts: all
   tasks:
@@ -10,22 +17,12 @@
       tags: base
 
 - name: Install monitoring tools (server)
-  hosts: monitoring
-  tasks:
-    - import_role:
-        name: prometheus
-      tags: prometheus
-    - import_role:
-        name: grafana
-      tags: grafana
-
-- name: Install monitoring tools (agents)
   hosts: all
   tasks:
     - import_role:
         name: prometheus
-        tasks_from: node-exporter.yml
-  tags: node-exporter
+    - import_role:
+        name: grafana
 
 - name: Install logging aggregation (agents)
   hosts: mjolnir

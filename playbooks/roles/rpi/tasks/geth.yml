@@ -21,13 +21,6 @@
     checksum: md5:{{ geth_md5 }}
   when: ansible_architecture == "aarch64"
 
-- name: Download Geth for ARMv7
-  get_url:
-    url: https://gethstore.blob.core.windows.net/builds/geth-alltools-linux-arm7-{{ geth_version }}.tar.gz
-    dest: /tmp/geth-alltools-linux-{{ geth_version }}.tar.gz
-    checksum: md5:{{ geth_md5 }}
-  when: ansible_architecture == "armv7l"
-
 - name: Extract Geth tarball
   unarchive:
     src: /tmp/geth-alltools-linux-{{ geth_version }}.tar.gz
@@ -75,7 +68,12 @@
     name: pcscd
     state: present
 
-- name: Start Geth service
-  service:
+- name: Enable Geth service on boot
+  ansible.builtin.service:
     name: geth
     enabled: yes
+
+- name: Start Geth service, if not started
+  ansible.builtin.service:
+    name: geth
+    state: started

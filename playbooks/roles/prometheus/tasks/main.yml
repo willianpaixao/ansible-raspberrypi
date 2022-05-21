@@ -6,3 +6,10 @@
 
 - import_tasks: alertmanager.yml
   tags: alertmanager
+
+- import_tasks: node-exporter.yml
+  tags: node-exporter
+
+- import_tasks: blackbox-exporter.yml
+  tags: blackbox
+
