@@ -1,0 +1,74 @@
+## The GitLab Server URL (with protocol) that want to register the runner against
+### ref: https://docs.gitlab.com/runner/commands/README.html#gitlab-runner-register
+###
+gitlabUrl: "https://gitlab.com/"
+
+## The Registration Token for adding new Runners to the GitLab Server. This must
+### be retrieved from your GitLab Instance.
+### ref: https://docs.gitlab.com/ce/ci/runners/README.html
+###
+runnerRegistrationToken: "GR13489417sj2yskpkxNizq4i6KJH"
+
+## Unregister runner before termination
+##
+## Updating the runner's chart version or configuration will cause the runner container
+## to be terminated and created again. This may cause your Gitlab instance to reference
+## non-existant runners. Un-registering the runner before termination mitigates this issue.
+## ref: https://docs.gitlab.com/runner/commands/README.html#gitlab-runner-unregister
+##
+## Please set unregisterRunners to false if you set unregisterRunner to true as only
+## one preStop action is supported.
+##
+unregisterRunner: true
+
+## Configure integrated Prometheus metrics exporter
+##
+## ref: https://docs.gitlab.com/runner/monitoring/#configuration-of-the-metrics-http-server
+##
+metrics:
+  enabled: true
+
+## For RBAC support:
+rbac:
+  create: true
+  ## Define list of rules to be added to the rbac role permissions.
+  ## Each rule supports the keys:
+  ## - apiGroups: default "" (indicates the core API group) if missing or empty.
+  ## - resources: default "*" if missing or empty.
+  ## - verbs: default "*" if missing or empty.
+  rules:
+    - resources: ["configmaps", "pods", "pods/attach", "secrets", "services"]
+      verbs: ["get", "list", "watch", "create", "patch", "delete"]
+    - apiGroups: [""]
+      resources: ["pods/exec"]
+      verbs: ["create", "patch", "delete"]
+
+## Configuration for the Pods that the runner launches for each new job
+##
+runners:
+  # runner configuration, where the multi line strings is evaluated as
+  # template so you can specify helm values inside of it.
+  #
+  # tpl: https://helm.sh/docs/howto/charts_tips_and_tricks/#using-the-tpl-function
+  # runner configuration: https://docs.gitlab.com/runner/configuration/advanced-configuration.html
+  config: |
+    [[runners]]
+      executor = "kubernetes"
+      [runners.kubernetes]
+        namespace = "gitlab-runner"
+        image = "ubuntu:22.04"
+        privileged = true
+
+  ## Specify the tags associated with the runner. Comma-separated list of tags.
+  ##
+  ## ref: https://docs.gitlab.com/ee/ci/runners/configure_runners.html#use-tags-to-control-which-jobs-a-runner-can-run
+  ##
+  tags: "arm64,k3s"
+
+  ## Specify if jobs without tags should be run.
+  ## If not specified, Runner will default to true if no tags were specified. In other case it will
+  ## default to false.
+  ##
+  ## ref: https://docs.gitlab.com/ee/ci/runners/configure_runners.html#set-a-runner-to-run-untagged-jobs
+  ##
+  runUntagged: false

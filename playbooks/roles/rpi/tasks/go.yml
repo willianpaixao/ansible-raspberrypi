@@ -1,9 +1,18 @@
 ---
 # file: roles/rpi/tasks/go.yml
 
-- name: Download and extract Go tarball
-  unarchive:
-    src: https://golang.org/dl/go1.15.5.linux-armv6l.tar.gz
+- name: "[{{ ansible_architecture }}] Download and extract Go tarball"
+  ansible.builtin.unarchive:
+    src: https://go.dev/dl/go1.18.2.linux-arm64.tar.gz
     dest: /usr/local
     remote_src: yes
-  when: ansible_architecture == "armv6l" or ansible_architecture == "armv7l"
+  when: ansible_architecture == 'aarch64'
+
+- name: Copy Go binaries to PATH
+  ansible.builtin.file:
+    src: '/usr/local/go/bin/{{ item }}'
+    dest: '/usr/local/bin/{{ item }}'
+    state: link
+  loop:
+    - go
+    - gofmt

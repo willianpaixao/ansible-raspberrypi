@@ -3,12 +3,11 @@
 
 - name: Remove all snaps
   community.general.snap:
-    name: "{{ item }}"
+    name:
+      - lxd
+      - core18
+      - snapd
     state: absent
-  loop:
-    - core18
-    - lxd
-    - snapd
   when: ansible_architecture == 'aarch64' and ansible_facts['distribution'] == 'Ubuntu'
 
 - name: Remove snapd package

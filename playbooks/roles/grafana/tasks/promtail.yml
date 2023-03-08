@@ -6,7 +6,7 @@
     name: unzip
     state: present
 
-- name: Download and extract Promtail tarball (ARM64)
+- name: "[{{ ansible_architecture }}] Download and extract Promtail tarball"
   ansible.builtin.unarchive:
     src: https://github.com/grafana/loki/releases/download/v{{ promtail_version }}/promtail-linux-arm64.zip
     dest: /usr/local/bin

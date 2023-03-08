@@ -1,0 +1,9 @@
+---
+# file: roles/rpi/tasks/packages.yml
+
+- name: Install Raspberry specific packages
+  ansible.builtin.package:
+    name:
+      - linux-modules-extra-raspi
+    state: present
+  when: ansible_architecture == 'aarch64' and ansible_facts['distribution'] == 'Ubuntu'

@@ -6,12 +6,13 @@ positions:
   filename: /tmp/positions.yaml
 
 clients:
-  - url: http://192.168.0.5:3100/loki/api/v1/push
+  - url: https://loki.web3.art.br/loki/api/v1/push
 
 scrape_configs:
   - job_name: syslog
     syslog:
       listen_address: 0.0.0.0:1514
+      label_structured_data: yes
       labels:
         job: "syslog"
     relabel_configs:

@@ -1,0 +1,8 @@
+---
+# file: roles/geth/tasks/main.yml
+
+- import_tasks: geth.yml
+  tags: geth
+
+- import_tasks: prysm.yml
+  tags: prysm

@@ -1,0 +1,18 @@
+[Unit]
+Description=Prysm beacon-chain
+After=syslog.target network.target
+
+[Service]
+User=prysm
+Group=prysm
+Type=simple
+ExecStart=/usr/local/bin/beacon-chain --execution-endpoint=http://localhost:8551 --prater --datadir=/var/lib/prysm --jwt-secret=/var/lib/prysm/jwtsecret --genesis-state=/var/lib/prysm/genesis.ssz --monitoring-host 0.0.0.0 --accept-terms-of-use
+Nice=10
+KillMode=process
+KillSignal=SIGINT
+TimeoutStartSec=90
+TimeoutStopSec=90
+Restart=on-failure
+RestartSec=10s
+[Install]
+WantedBy=multi-user.target

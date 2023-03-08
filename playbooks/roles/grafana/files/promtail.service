@@ -1,5 +1,5 @@
 [Unit]
-Description=Loki is a horizontally-scalable, highly-available, multi-tenant log aggregation system inspired by Prometheus
+Description=Promtail is an agent which ships the contents of local logs to a private Grafana Loki instance
 Documentation=https://grafana.com/docs/loki/latest/clients/promtail/
 After=syslog.target network.target
 

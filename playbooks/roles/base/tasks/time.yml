@@ -5,7 +5,13 @@
   community.general.timezone:
     name: Europe/Stockholm
 
-- name: Restart cron
-  service:
-    name: cron
-    state: restarted
+- name: Install Network Time Synchronization
+  ansible.builtin.package:
+    name: systemd-timesyncd
+    state: present
+
+- name: Enable systemd-timesyncd service on boot
+  ansible.builtin.service:
+    name: systemd-timesyncd
+    enabled: yes
+    state: started

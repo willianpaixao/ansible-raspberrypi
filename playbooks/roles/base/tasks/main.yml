@@ -7,8 +7,8 @@
 - import_tasks: firewall.yml
   tags: firewall
 
-- import_tasks: package.yml
-  tags: apt
-
 - import_tasks: time.yml
   tags: time
+
+- import_tasks: user.yml
+  tags: user

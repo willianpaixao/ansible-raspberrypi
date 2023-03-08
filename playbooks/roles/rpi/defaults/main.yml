@@ -1,6 +1,5 @@
 ---
 # file: roles/rpi/defaults/main.yml
 
-node_exporter_version: 1.3.1
-geth_version: 1.10.17-25c9b49f
-geth_md5: 67474d1c7e8ecbd2f251d1fdb9ce2cf6
+geth_version: 1.10.18-de23cf91
+geth_md5: 30268f149cc3d8d935ec9c7f382ae8d4

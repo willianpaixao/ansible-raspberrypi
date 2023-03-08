@@ -1,0 +1,19 @@
+[Unit]
+Description=Prometheus exporter for selected metrics
+Documentation=https://github.com/prometheus/blackbox_exporter
+After=syslog.target network.target
+
+[Service]
+User=root
+Group=root
+Type=simple
+ExecStart=/usr/local/bin/blackbox_exporter --config.file /etc/default/blackbox.yml
+Nice=10
+KillMode=process
+KillSignal=SIGINT
+TimeoutStopSec=90
+Restart=on-failure
+RestartSec=10s
+
+[Install]
+WantedBy=multi-user.target

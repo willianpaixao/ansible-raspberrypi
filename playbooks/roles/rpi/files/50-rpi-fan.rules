@@ -1,0 +1,14 @@
+SUBSYSTEM=="thermal"
+KERNEL=="thermal_zone3"
+
+ATTR{trip_point_0_temp}="80000"
+ATTR{trip_point_0_hyst}="10000"
+
+ATTR{trip_point_1_temp}="70000"
+ATTR{trip_point_1_hyst}="10000"
+
+ATTR{trip_point_2_temp}="60000"
+ATTR{trip_point_2_hyst}="5000"
+
+ATTR{trip_point_3_temp}="55000"
+ATTR{trip_point_3_hyst}="5000"

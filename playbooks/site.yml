@@ -2,21 +2,19 @@
 # file: site.yml
 # version: v1.1
 
-- name: Common Raspberry tasks
-  hosts: all
-  tasks:
-    - import_role:
-        name: rpi
-      tags: rpi
-
 - name: Install base packages
   hosts: all
   tasks:
     - import_role:
         name: base
-      tags: base
 
-- name: Install monitoring tools (server)
+- name: Common Raspberry tasks
+  hosts: aarch64
+  tasks:
+    - import_role:
+        name: rpi
+
+- name: Install monitoring stack
   hosts: all
   tasks:
     - import_role:
@@ -24,39 +22,8 @@
     - import_role:
         name: grafana
 
-- name: Install logging aggregation (agents)
-  hosts: mjolnir
-  tasks:
-    - import_role:
-        name: grafana
-        tasks_from: promtail.yml
-  tags: promtail
-
 - name: Install Geth
   hosts: geth
   tasks:
     - import_role:
-        name: rpi
-        tasks_from: geth.yml
-  tags: geth
-
-- name: Clean packages
-  hosts: logos
-  tasks:
-    - import_role:
-        name: rpi
-        tasks_from: snap.yml
-  tags: snap
-
-- name: Install Tor relays
-  hosts: relays
-  vars:
-    tor_ContactInfo: willian@ufpa.br
-    tor_signingkeylifetime_days: 90
-    tor_nickname: "{{ ansible_hostname }}"
-    tor_ports:
-        - { orport: 443, dirport: 80}
-  tasks:
-    - import_role:
-        name: nusenu.relayor
-  tags: tor
+        name: geth

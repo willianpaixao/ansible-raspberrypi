@@ -1,0 +1,4 @@
+---
+# file: group_vars/geth/main.yml
+
+geth_version: 1.10.25-69568c55

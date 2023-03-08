@@ -1,0 +1,63 @@
+---
+# file: roles/geth/tasks/prysm.yml
+
+- name: Add the prysm system group
+  ansible.builtin.group:
+    name: prysm
+    system: yes
+
+- name: Add the prysm system user
+  ansible.builtin.user:
+    name: prysm
+    create_home: no
+    shell: /usr/bin/false
+    system: yes
+    group: prysm
+
+- name: Create data directory for Prysm
+  ansible.builtin.file:
+    path: /var/lib/prysm
+    owner: prysm
+    group: prysm
+    state: directory
+    mode: '0755'
+
+- name: "[{{ ansible_architecture }}] Download Prysm - beacon-chain"
+  ansible.builtin.get_url:
+    url: https://github.com/prysmaticlabs/prysm/releases/download/v3.1.1/beacon-chain-v3.1.1-linux-arm64
+    dest: /usr/local/bin/beacon-chain
+    mode: '0755'
+  when: ansible_architecture == "aarch64"
+
+- name: "Download Prysm - genesis state"
+  ansible.builtin.get_url:
+    url: https://github.com/eth-clients/eth2-networks/raw/master/shared/prater/genesis.ssz
+    dest: /var/lib/prysm/
+    mode: '0644'
+
+- name: Copy jwtsecret from Geth
+  ansible.builtin.copy:
+    src: /var/lib/geth/geth/jwtsecret
+    dest: /var/lib/prysm/jwtsecret
+    remote_src: yes
+    owner: prysm
+    group: prysm
+    mode: '0600'
+
+- name: Copy systemd file for beacon-chain service
+  ansible.builtin.copy:
+    src: beacon-chain.service
+    dest: /lib/systemd/system/beacon-chain.service
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: Enable beacon-chain service on boot
+  ansible.builtin.service:
+    name: beacon-chain
+    enabled: yes
+
+- name: Start beacon-chain service, if not started
+  ansible.builtin.service:
+    name: beacon-chain
+    state: started

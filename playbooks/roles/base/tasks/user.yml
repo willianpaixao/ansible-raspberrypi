@@ -1,0 +1,7 @@
+---
+
+- name: Set authorized keys taken from GitLab
+  ansible.posix.authorized_key:
+    user: willian
+    key: https://gitlab.com/willianpaixao.keys
+  tags: authorized_key

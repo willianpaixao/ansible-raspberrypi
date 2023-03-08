@@ -1,45 +1,38 @@
 # ansible-raspberrypi
+
 [![pipeline status](https://gitlab.com/willianpaixao/ansible-raspberrypi/badges/master/pipeline.svg)](https://gitlab.com/willianpaixao/ansible-raspberrypi/commits/master)
 
-`spoon` is the name of my [Raspberry Pi](https://www.raspberrypi.org/) 3B+ that server as personal home server. This repository is a collection of [Ansible](https://www.ansible.com/) roles that setup most the configuration needed.
+[[_TOC_]]
 
-## Getting started
+# Inventory
 
-### Setting up
+| hostname       | IP address   | architecture | groups     | services            |
+| -------------- | ------------ | ------------ | ---------- | ------------------- |
+| logos          | 192.168.0.3  | ARM64        |            |                     |
+| mjolnir        | 192.168.0.4  | ARM64        |            |                     |
+| vigilant       | 192.168.0.5  | ARMv6        |            |                     |
+| icarus         | 192.168.0.7  | ARMv6        |            |                     |
+| mnemosyne      | 192.168.0.13 | ARM64        |            |                     |
 
-The only pre-step is enable SSH server at the RPi OS. There are several ways to setup a wifi connection, for example you can generate the passphrase to the *wpa_supplicant* format running locally:
-``` bash
-$ wpa_passphrase <SSID> <password>
-```
-Then copy and paste the output in the RPi's SD card, placing it in the rootfs partition: `rootfs/etc/wpa_supplicant/wpa_supplicant.conf`
+# Manual
 
-> NOTE: If your wifi network connection is 5G, you might want to set the country in the `wpa_supplicant` above mentioned and add `COUNTRY=SE` to the desired network.
+/boot/firmware/config.txt
+dtoverlay=disable-bt
+dtoverlay=disable-wifi
 
-> NOTE: I only have tested this playbook under [Raspbian](https://www.raspberrypi.org/downloads/raspbian/) (Debian), although many tasks are OS independent. If you have issues, please [create](https://gitlab.com/willianpaixao/ansible-raspberrypi/issues/new) a ticket.
+/boot/firmware/cmdline.txt
+usb-storage.quirks=152d:0583:u fsck.mode=force fsck.repair=yes
 
-### Downloading
+sudo mkdir /etc/systemd/resolved.conf.d/
+mv web3-art-br.conf /etc/systemd/resolved.conf.d/
 
-* First step is cloning the repository:
-``` bash
-$ git clone https://gitlab.com/willianpaixao/ansible-raspberrypi
-```
+sudo apt-get purge snapd unattended-upgrades
+sudo rm -rfv /var/log/unattended-upgrades
 
-* Then create the environment and download the dependencies:
-``` bash
-$ python3 -m pip install --user virtualenv
-$ cd playbooks
-$ virtualenv .env
-$ source .env/bin/activate
-$ python3 -m pip install -r requirements.txt
-```
+sudo rpi-eeprom-update -d -a
 
-There's a bash script to bootstrap the execution of the playbooks. Check the content of the file `run.sh`, changing the variables as you need and then execute it:
-``` bash
-$ ./run.sh
-```
-> NOTE: Depending on your RPi settings, you might need to provide password.
-> NOTE: A ping is performed to check host's connectivity. You need `sshpass` installed for this feature.
+sudo apt-get install linux-modules-extra-raspi
+sudo apt-get update && sudo apt-get --yes dist-upgrade && sudo apt-get autoremove && sudo apt-get autoclean
 
-## Roles
-* `base/` First and most basic role. It upgrade system packages, install necessary command tools like Git, Vim and Tmux.
-* `paixao/` Downloads my user files and create symlinks to the specific target home folder. Please see my [willianpaixao/dotfiles](https://github.com/willianpaixao/dotfiles) for more information.
+/etc/modprobe.d/disable-uas.conf
+options usb-storage quirks=152d:0583:u
