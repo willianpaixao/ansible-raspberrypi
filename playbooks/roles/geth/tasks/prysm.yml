@@ -24,7 +24,7 @@
 
 - name: "[{{ ansible_architecture }}] Download Prysm - beacon-chain"
   ansible.builtin.get_url:
-    url: https://github.com/prysmaticlabs/prysm/releases/download/v3.1.1/beacon-chain-v3.1.1-linux-arm64
+    url: https://github.com/prysmaticlabs/prysm/releases/download/v4.0.2/beacon-chain-v4.0.2-linux-arm64
     dest: /usr/local/bin/beacon-chain
     mode: '0755'
   when: ansible_architecture == "aarch64"
@@ -33,6 +33,8 @@
   ansible.builtin.get_url:
     url: https://github.com/eth-clients/eth2-networks/raw/master/shared/prater/genesis.ssz
     dest: /var/lib/prysm/
+    owner: prysm
+    group: prysm
     mode: '0644'
 
 - name: Copy jwtsecret from Geth

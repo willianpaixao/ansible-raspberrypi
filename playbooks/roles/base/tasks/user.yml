@@ -1,4 +1,19 @@
 ---
+# file: roles/base/tasks/user.yml
+
+- name: Remove pi user
+  ansible.builtin.user:
+    name: pi
+    state: absent
+    remove: yes
+    force: yes
+  tags: user
+
+- name: Remove pi group
+  ansible.builtin.group:
+    name: pi
+    state: absent
+  tags: user
 
 - name: Set authorized keys taken from GitLab
   ansible.posix.authorized_key:

@@ -17,43 +17,16 @@
 - name: "[{{ ansible_architecture }}] Download Geth"
   ansible.builtin.unarchive:
     src: https://gethstore.blob.core.windows.net/builds/geth-linux-amd64-{{ geth_version }}.tar.gz
-    dest: /tmp
-    remote_src: yes
-  when: ansible_architecture == 'x86_64'
-
-- name: "[{{ ansible_architecture }}] Move Geth binaries to PATH"
-  ansible.builtin.copy:
-    src: '/tmp/geth-linux-amd64-{{ geth_version }}/geth'
-    dest: '/usr/local/bin/geth'
-    mode: 0755
+    dest: /usr/local/bin
     remote_src: yes
   when: ansible_architecture == 'x86_64'
 
 - name: "[{{ ansible_architecture }}] Download Geth"
   ansible.builtin.unarchive:
     src: https://gethstore.blob.core.windows.net/builds/geth-alltools-linux-arm64-{{ geth_version }}.tar.gz
-    dest: /tmp
+    dest: /usr/local/bin
     remote_src: yes
   when: ansible_architecture == "aarch64"
-
-- name: "[{{ ansible_architecture }}] Move Geth binaries to PATH"
-  ansible.builtin.copy:
-    src: '/tmp/geth-alltools-linux-arm64-{{ geth_version }}/{{ item }}'
-    dest: '/usr/local/bin/{{ item }}'
-    mode: 0755
-    remote_src: yes
-  with_items:
-    - "clef"
-    - "geth"
-  when: ansible_architecture == "aarch64"
-
-- name: Delete unused files
-  file:
-    path: '{{ item }}'
-    state: absent
-  with_items:
-    - "/tmp/geth-alltools-linux-{{ geth_version }}"
-    - "/tmp/geth-alltools-linux-{{ geth_version }}.tar.gz"
 
 - name: Create data directory for geth
   file:
@@ -86,3 +59,10 @@
   ansible.builtin.service:
     name: geth
     state: started
+
+- name: Allow access to port 30303
+  community.general.ufw:
+    rule: allow
+    port: '30303'
+    proto: tcp
+  when: ansible_facts['distribution'] == "Ubuntu"

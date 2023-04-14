@@ -4,6 +4,9 @@
 - import_tasks: apt.yml
   tags: apt
 
+- import_tasks: snap.yml
+  tags: snap
+
 - import_tasks: firewall.yml
   tags: firewall
 

@@ -13,17 +13,19 @@
   tasks:
     - import_role:
         name: rpi
-
-- name: Install monitoring stack
-  hosts: all
-  tasks:
-    - import_role:
-        name: prometheus
-    - import_role:
-        name: grafana
+  tags: rpi
 
 - name: Install Geth
   hosts: geth
   tasks:
     - import_role:
         name: geth
+  tags: geth
+
+- name: Install monitoring agents
+  hosts: all
+  tasks:
+    - import_role:
+        name: prometheus
+        tasks_from: node-exporter
+  tags: node-exporter

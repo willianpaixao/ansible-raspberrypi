@@ -1,5 +1,0 @@
----
-# file: roles/rpi/defaults/main.yml
-
-geth_version: 1.10.18-de23cf91
-geth_md5: 30268f149cc3d8d935ec9c7f382ae8d4

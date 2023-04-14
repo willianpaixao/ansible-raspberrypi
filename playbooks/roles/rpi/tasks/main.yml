@@ -1,20 +1,5 @@
 ---
 # file: roles/rpi/tasks/main.yml
-
-- name: Remove pi user
-  user:
-    name: pi
-    state: absent
-    remove: yes
-    force: yes
-  tags: user
-
-- name: Remove pi group
-  group:
-    name: pi
-    state: absent
-  tags: user
-
 - name: Copy systemd file for fan control
   copy:
     src: 50-rpi-fan.rules
@@ -27,9 +12,6 @@
 - name: Reload udev rules
   shell: udevadm control --reload-rules && udevadm trigger
   tags: fan
-
-- import_tasks: go.yml
-  tags: go
 
 - import_tasks: packages.yml
   tags: rpi
