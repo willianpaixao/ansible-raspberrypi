@@ -1,6 +1,6 @@
 repos:
   - repo: https://github.com/ansible/ansible-lint
-    rev: v6.14.6
+    rev: v6.15.0
     hooks:
       - id: ansible-lint
   - repo: https://github.com/pre-commit/pre-commit-hooks
