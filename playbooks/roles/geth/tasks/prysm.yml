@@ -24,14 +24,21 @@
 
 - name: "[{{ ansible_architecture }}] Download Prysm - beacon-chain"
   ansible.builtin.get_url:
-    url: https://github.com/prysmaticlabs/prysm/releases/download/v4.0.2/beacon-chain-v4.0.2-linux-arm64
+    url: https://github.com/prysmaticlabs/prysm/releases/download/v5.0.0/beacon-chain-v5.0.0-linux-arm64
     dest: /usr/local/bin/beacon-chain
+    mode: '0755'
+  when: ansible_architecture == "aarch64"
+
+- name: "[{{ ansible_architecture }}] Download Prysm - client-stats"
+  ansible.builtin.get_url:
+    url: https://github.com/prysmaticlabs/prysm/releases/download/v5.0.0/client-stats-v5.0.0-linux-arm64
+    dest: /usr/local/bin/client-stats
     mode: '0755'
   when: ansible_architecture == "aarch64"
 
 - name: "Download Prysm - genesis state"
   ansible.builtin.get_url:
-    url: https://github.com/eth-clients/eth2-networks/raw/master/shared/prater/genesis.ssz
+    url: https://github.com/eth-clients/holesky/raw/main/custom_config_data/genesis.ssz
     dest: /var/lib/prysm/
     owner: prysm
     group: prysm
@@ -63,3 +70,11 @@
   ansible.builtin.service:
     name: beacon-chain
     state: started
+
+- name: Allow access to port 8080
+  community.general.ufw:
+    rule: allow
+    port: '8080'
+    proto: tcp
+  when: ansible_facts['distribution'] == "Ubuntu"
+  tags: ufw

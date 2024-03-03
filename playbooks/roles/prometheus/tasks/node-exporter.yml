@@ -33,7 +33,7 @@
     remote_src: yes
   when: ansible_architecture == 'x86_64'
 
-- name: Move node-exporter binary to PATH
+- name: "[{{ ansible_architecture }}] Move node-exporter binary to PATH"
   ansible.builtin.copy:
     src: '/tmp/node_exporter-{{ node_exporter_version }}.linux-arm64/node_exporter'
     dest: '/usr/local/bin/node_exporter'

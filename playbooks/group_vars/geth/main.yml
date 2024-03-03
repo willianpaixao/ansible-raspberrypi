@@ -1,4 +1,4 @@
 ---
 # file: group_vars/geth/main.yml
 
-geth_version: 1.11.5-a38f4108
+geth_version: 1.13.14-2bd6bd01

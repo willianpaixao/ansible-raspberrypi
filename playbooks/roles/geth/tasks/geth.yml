@@ -16,20 +16,22 @@
 
 - name: "[{{ ansible_architecture }}] Download Geth"
   ansible.builtin.unarchive:
-    src: https://gethstore.blob.core.windows.net/builds/geth-linux-amd64-{{ geth_version }}.tar.gz
-    dest: /usr/local/bin
-    remote_src: yes
-  when: ansible_architecture == 'x86_64'
-
-- name: "[{{ ansible_architecture }}] Download Geth"
-  ansible.builtin.unarchive:
-    src: https://gethstore.blob.core.windows.net/builds/geth-alltools-linux-arm64-{{ geth_version }}.tar.gz
-    dest: /usr/local/bin
+    src: https://gethstore.blob.core.windows.net/builds/geth-linux-arm64-{{ geth_version }}.tar.gz
+    dest: /tmp
     remote_src: yes
   when: ansible_architecture == "aarch64"
 
+- name: Copy geth binary
+  ansible.builtin.copy:
+    src: /tmp/geth-linux-arm64-{{ geth_version }}/geth
+    dest: /usr/local/bin/geth
+    remote_src: yes
+    owner: root
+    group: root
+    mode: '0755'
+
 - name: Create data directory for geth
-  file:
+  ansible.builtin.file:
     path: /var/lib/geth
     owner: geth
     group: geth
@@ -37,7 +39,7 @@
     mode: '0755'
 
 - name: Copy systemd file for geth service
-  copy:
+  ansible.builtin.copy:
     src: geth.service
     dest: /lib/systemd/system/geth.service
     owner: root
@@ -45,7 +47,7 @@
     mode: '0644'
 
 - name: Install pcscd
-  package:
+  ansible.builtin.package:
     update_cache: yes
     name: pcscd
     state: present
@@ -59,10 +61,3 @@
   ansible.builtin.service:
     name: geth
     state: started
-
-- name: Allow access to port 30303
-  community.general.ufw:
-    rule: allow
-    port: '30303'
-    proto: tcp
-  when: ansible_facts['distribution'] == "Ubuntu"
