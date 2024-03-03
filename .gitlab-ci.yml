@@ -1,5 +1,5 @@
 default:
-  image: python:3.11
+  image: python:3.12
 
 lint:
   before_script:
