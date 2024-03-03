@@ -7,8 +7,8 @@ jobs:
     name: Ansible Lint
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
       - name: Run ansible-lint
-        uses: ansible/ansible-lint-action@912d1bf4240f503c2b7e50a6cacadd7df5c3dd82 # v6
+        uses: ansible/ansible-lint@main
