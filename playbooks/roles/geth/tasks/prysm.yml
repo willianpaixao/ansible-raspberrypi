@@ -24,6 +24,20 @@
 
 - name: "[{{ ansible_architecture }}] Download Prysm - beacon-chain"
   ansible.builtin.get_url:
+    url: https://github.com/prysmaticlabs/prysm/releases/download/v5.0.0/beacon-chain-v5.0.0-linux-amd64
+    dest: /usr/local/bin/beacon-chain
+    mode: '0755'
+  when: ansible_architecture == "x86_64"
+
+- name: "[{{ ansible_architecture }}] Download Prysm - client-stats"
+  ansible.builtin.get_url:
+    url: https://github.com/prysmaticlabs/prysm/releases/download/v5.0.0/client-stats-v5.0.0-linux-amd64
+    dest: /usr/local/bin/client-stats
+    mode: '0755'
+  when: ansible_architecture == "x86_64"
+
+- name: "[{{ ansible_architecture }}] Download Prysm - beacon-chain"
+  ansible.builtin.get_url:
     url: https://github.com/prysmaticlabs/prysm/releases/download/v5.0.0/beacon-chain-v5.0.0-linux-arm64
     dest: /usr/local/bin/beacon-chain
     mode: '0755'

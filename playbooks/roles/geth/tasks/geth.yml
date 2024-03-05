@@ -16,12 +16,29 @@
 
 - name: "[{{ ansible_architecture }}] Download Geth"
   ansible.builtin.unarchive:
+    src: https://gethstore.blob.core.windows.net/builds/geth-linux-amd64-{{ geth_version }}.tar.gz
+    dest: /tmp
+    remote_src: yes
+  when: ansible_architecture == "x86_64"
+
+- name: "[{{ ansible_architecture }}] Download Geth"
+  ansible.builtin.unarchive:
     src: https://gethstore.blob.core.windows.net/builds/geth-linux-arm64-{{ geth_version }}.tar.gz
     dest: /tmp
     remote_src: yes
   when: ansible_architecture == "aarch64"
 
-- name: Copy geth binary
+- name: "[{{ ansible_architecture }}] Copy geth binary"
+  ansible.builtin.copy:
+    src: /tmp/geth-linux-amd64-{{ geth_version }}/geth
+    dest: /usr/local/bin/geth
+    remote_src: yes
+    owner: root
+    group: root
+    mode: '0755'
+  when: ansible_architecture == "x86_64"
+
+- name: "[{{ ansible_architecture }}] Copy geth binary"
   ansible.builtin.copy:
     src: /tmp/geth-linux-arm64-{{ geth_version }}/geth
     dest: /usr/local/bin/geth
@@ -29,6 +46,7 @@
     owner: root
     group: root
     mode: '0755'
+  when: ansible_architecture == "aarch64"
 
 - name: Create data directory for geth
   ansible.builtin.file:

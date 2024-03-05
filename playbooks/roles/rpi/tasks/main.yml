@@ -1,7 +1,7 @@
 ---
 # file: roles/rpi/tasks/main.yml
 - name: Copy systemd file for fan control
-  copy:
+  ansible.builtin.copy:
     src: 50-rpi-fan.rules
     dest: /etc/udev/rules.d/50-rpi-fan.rules
     owner: root
