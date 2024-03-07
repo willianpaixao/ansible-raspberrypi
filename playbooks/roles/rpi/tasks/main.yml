@@ -1,12 +1,16 @@
 ---
 # file: roles/rpi/tasks/main.yml
-- name: Copy systemd file for fan control
+
+- name: Copy udev rules for Raspberry Pi fan control
   ansible.builtin.copy:
-    src: 50-rpi-fan.rules
-    dest: /etc/udev/rules.d/50-rpi-fan.rules
+    src: "{{  item }}"
+    dest: /etc/udev/rules.d/
     owner: root
     group: root
     mode: '0640'
+  loop:
+    - 50-rpi-fan.rules
+    - 51-cpu-governor.rules
   tags: fan
 
 - name: Reload udev rules
